@@ -1,5 +1,7 @@
 # Using agent-skills with Codex
 
+This Codex plugin is inspired by [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills), created by [Addy Osmani](https://github.com/addyosmani). This repository adapts the original lifecycle skills, commands, and review personas for Codex.
+
 Codex discovers command-like workflows through agent skills. This repo includes `.codex-plugin/plugin.json` for the core plugin skills, plus Spec Kit-style command shims under `.agents/skills/` for exact slash command names such as `/spec` and `/build`.
 
 There are two install steps because Codex loads them through different roots:
@@ -7,13 +9,27 @@ There are two install steps because Codex loads them through different roots:
 1. `codex plugin add agent-skills@personal` installs the namespaced core skills, such as `agent-skills:spec-driven-development`.
 2. Copying `.agents/skills/*` into `~/.agents/skills/` installs the unprefixed command skills, such as `/spec`.
 
-## Install locally
+## Install from GitHub
+
+For normal use, clone the public Codex port and run the installer:
+
+```bash
+git clone https://github.com/OmEr1112/agent-skills-for-codex.git
+cd agent-skills-for-codex
+./install.sh
+```
+
+The installer copies the plugin to `~/plugins/agent-skills`, updates the personal marketplace, installs the command shims, copies Codex role configs, registers the subagent roles, and runs `codex plugin add agent-skills@personal`.
+
+Start a new Codex thread after installation so the command and skill metadata is loaded.
+
+## Install manually
 
 For a local development install, put this repository at the personal plugin path Codex expects. If `~/plugins/agent-skills` already exists, update that copy instead of nesting another copy inside it.
 
 ```bash
 mkdir -p ~/plugins
-cp -R /path/to/agent-skills ~/plugins/
+cp -R ./agent-skills-for-codex ~/plugins/agent-skills
 codex plugin add agent-skills@personal
 mkdir -p ~/.agents/skills
 cp -R ~/plugins/agent-skills/.agents/skills/{spec,plan,build,test,review,code-simplify,ship} ~/.agents/skills/
@@ -21,22 +37,22 @@ mkdir -p ~/.codex/agent-skills-agents
 cp -R ~/plugins/agent-skills/.codex/agents/. ~/.codex/agent-skills-agents/
 ```
 
-Then add role entries like these to `~/.codex/config.toml` if you want the personas available outside this repo. Use real absolute paths for `config_file` (for this machine, that path is `/Users/rooted/.codex/agent-skills-agents/...`).
+Then add role entries like these to `~/.codex/config.toml` if you want the personas available outside this repo. Because these entries live in `~/.codex/config.toml`, the relative `config_file` paths resolve from `~/.codex/`.
 
 ```toml
 [agents.code-reviewer]
 description = "Senior Staff Engineer persona for five-axis review across correctness, readability, architecture, security, and performance."
-config_file = "/Users/rooted/.codex/agent-skills-agents/code-reviewer.config.toml"
+config_file = "agent-skills-agents/code-reviewer.config.toml"
 nickname_candidates = ["Reviewer", "Staff Reviewer", "Code Review"]
 
 [agents.security-auditor]
 description = "Security Engineer persona for vulnerability detection, threat modeling, OWASP checks, secrets, auth, and dependency risk."
-config_file = "/Users/rooted/.codex/agent-skills-agents/security-auditor.config.toml"
+config_file = "agent-skills-agents/security-auditor.config.toml"
 nickname_candidates = ["Security", "Auditor", "Security Review"]
 
 [agents.test-engineer]
 description = "QA Engineer persona for test strategy, coverage analysis, Prove-It bug tests, and missing test scenarios."
-config_file = "/Users/rooted/.codex/agent-skills-agents/test-engineer.config.toml"
+config_file = "agent-skills-agents/test-engineer.config.toml"
 nickname_candidates = ["QA", "Test Engineer", "Coverage"]
 ```
 
@@ -66,6 +82,22 @@ The default personal marketplace lives at `~/.agents/plugins/marketplace.json`. 
 ```
 
 After installing or updating the plugin, start a new Codex thread so the new command and skill metadata is loaded.
+
+## How to use it
+
+Use the lifecycle commands directly inside Codex:
+
+```text
+/spec Describe the product or feature you want to build.
+/plan
+/build
+/test
+/review
+/code-simplify
+/ship
+```
+
+The commands route to the bundled Agent Skills workflows. `/ship` also uses the Codex subagent roles `code-reviewer`, `security-auditor`, and `test-engineer` for parallel launch-readiness review.
 
 ## Commands
 

@@ -1,4 +1,8 @@
-# Agent Skills for Codex
+# Agent Skills for Codex — inspired by Addy Osmani's Agent Skills
+
+Codex port by OmEr1112. Inspired by and adapted from [Addy Osmani's Agent Skills](https://github.com/addyosmani/agent-skills).
+
+Original concept and workflows by [Addy Osmani](https://github.com/addyosmani). This repository packages those software-development lifecycle skills for OpenAI Codex with Codex-native plugin metadata, slash-command shims, and subagent role configuration.
 
 Production-grade engineering workflows for Codex, covering the development lifecycle from spec to ship.
 
@@ -14,34 +18,39 @@ This Codex plugin provides the core Agent Skills workflows plus slash-command sh
 | `/code-simplify` | Simplify code without changing behavior |
 | `/ship` | Run launch readiness checks with Codex subagents |
 
+## What This Gives You
+
+- 23 reusable Agent Skills for software engineering workflows.
+- 7 Codex slash commands that mirror the original lifecycle commands.
+- 3 Codex subagent roles for launch review: `code-reviewer`, `security-auditor`, and `test-engineer`.
+- Codex plugin packaging through `.codex-plugin/plugin.json`.
+- A one-command installer for local Codex setup.
+
+Codex plugin structure follows OpenAI's plugin documentation: plugins use `.codex-plugin/plugin.json`, bundled skills live under `skills/<name>/SKILL.md`, and marketplace entries tell Codex where to load the plugin from. See [OpenAI's Codex plugin docs](https://developers.openai.com/codex/plugins/build).
+
 ## Install in Codex
 
-Clone or copy this repository to Codex's personal plugin directory:
+Clone this repository:
 
 ```bash
-mkdir -p ~/plugins
-git clone <repo-url> ~/plugins/agent-skills
+git clone https://github.com/OmEr1112/agent-skills-for-codex.git
+cd agent-skills-for-codex
 ```
 
-If you already have a local copy, make sure the plugin root is:
-
-```text
-~/plugins/agent-skills
-```
-
-The folder should contain `.codex-plugin/plugin.json`.
-
-### Recommended: one-command install
-
-From the plugin root:
+Then run the installer:
 
 ```bash
 ./install.sh
 ```
 
-The installer:
+The installer copies the plugin into Codex's personal plugin location:
 
-- copies the plugin to `~/plugins/agent-skills`
+```text
+~/plugins/agent-skills
+```
+
+Then it:
+
 - creates or updates `~/.agents/plugins/marketplace.json`
 - runs `codex plugin add agent-skills@personal`
 - installs the `/spec`, `/plan`, `/build`, `/test`, `/review`, `/code-simplify`, and `/ship` command shims
@@ -49,7 +58,41 @@ The installer:
 
 Start a new Codex thread after the installer finishes.
 
+## How To Use It
+
+After installing, start a new Codex thread in the project you want to work on. Then use the commands naturally:
+
+```text
+/spec Build a dashboard for tracking customer follow-ups.
+/plan
+/build
+/test
+/review
+/code-simplify
+/ship
+```
+
+Typical workflow:
+
+1. Use `/spec` to define the feature before writing code.
+2. Use `/plan` to break the spec into small, verifiable tasks.
+3. Use `/build` to implement the next task with tests.
+4. Use `/test` when you want a TDD or bug reproduction pass.
+5. Use `/review` before merging.
+6. Use `/code-simplify` to reduce complexity while preserving behavior.
+7. Use `/ship` before production release; it fans out to Codex subagents for code review, security review, and test coverage analysis.
+
+You can also invoke the namespaced skills directly in normal language:
+
+```text
+Use Agent Skills to write a spec for this feature.
+Use Agent Skills to review the current diff.
+Use Agent Skills to prepare this change for shipping.
+```
+
 ## Manual Install
+
+The installer is recommended. Use this manual path only if you want to wire the plugin into Codex yourself.
 
 ### 1. Add the personal marketplace entry
 
@@ -152,15 +195,18 @@ Start a new Codex thread after installation. Existing threads may not pick up ne
 
 ## Updating an Existing Install
 
-When you update the local plugin source:
+Pull the latest version and rerun the installer:
 
 ```bash
-codex plugin add agent-skills@personal
-cp -R ~/plugins/agent-skills/.agents/skills/{spec,plan,build,test,review,code-simplify,ship} ~/.agents/skills/
-cp -R ~/plugins/agent-skills/.codex/agents/. ~/.codex/agent-skills-agents/
+git pull
+./install.sh
 ```
 
 Then start a new Codex thread.
+
+## Credit
+
+This project is inspired by [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills), created by [Addy Osmani](https://github.com/addyosmani). The workflows, lifecycle command model, and specialist review personas come from that original project. This repository adapts them for Codex with Codex plugin packaging, command shims, and Codex subagent configuration.
 
 ## More Details
 

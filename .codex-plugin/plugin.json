@@ -19,15 +19,15 @@
       "Code review",
       "Testing guidance"
     ],
-    "websiteURL": "https://github.com/addyosmani/agent-skills",
+    "websiteURL": "https://github.com/OmEr1112/agent-skills-for-codex",
     "defaultPrompt": [
       "Use Agent Skills to choose the right workflow.",
       "Review this change with Agent Skills.",
       "Plan this feature with Agent Skills."
     ]
   },
-  "homepage": "https://github.com/addyosmani/agent-skills",
-  "repository": "https://github.com/addyosmani/agent-skills",
+  "homepage": "https://github.com/OmEr1112/agent-skills-for-codex",
+  "repository": "https://github.com/OmEr1112/agent-skills-for-codex",
   "license": "MIT",
   "keywords": [
     "agent-skills",
