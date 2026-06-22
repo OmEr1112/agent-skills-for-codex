@@ -1,0 +1,39 @@
+{
+  "name": "agent-skills",
+  "version": "0.1.0",
+  "description": "Production-grade engineering skills for AI coding agents, covering the full software development lifecycle from spec to ship.",
+  "author": {
+    "name": "Addy Osmani",
+    "url": "https://github.com/addyosmani"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Skills",
+    "shortDescription": "Production-grade engineering workflows for AI coding agents.",
+    "longDescription": "Agent Skills packages structured engineering workflows for specification, planning, implementation, testing, review, security, performance, documentation, and launch work.",
+    "developerName": "Addy Osmani",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills",
+      "Developer workflows",
+      "Code review",
+      "Testing guidance"
+    ],
+    "websiteURL": "https://github.com/addyosmani/agent-skills",
+    "defaultPrompt": [
+      "Use Agent Skills to choose the right workflow.",
+      "Review this change with Agent Skills.",
+      "Plan this feature with Agent Skills."
+    ]
+  },
+  "homepage": "https://github.com/addyosmani/agent-skills",
+  "repository": "https://github.com/addyosmani/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "engineering",
+    "workflows",
+    "coding-agents",
+    "software-development"
+  ]
+}

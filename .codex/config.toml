@@ -1,0 +1,14 @@
+[agents.code-reviewer]
+description = "Senior Staff Engineer persona for five-axis review across correctness, readability, architecture, security, and performance."
+config_file = "agents/code-reviewer.config.toml"
+nickname_candidates = ["Reviewer", "Staff Reviewer", "Code Review"]
+
+[agents.security-auditor]
+description = "Security Engineer persona for vulnerability detection, threat modeling, OWASP checks, secrets, auth, and dependency risk."
+config_file = "agents/security-auditor.config.toml"
+nickname_candidates = ["Security", "Auditor", "Security Review"]
+
+[agents.test-engineer]
+description = "QA Engineer persona for test strategy, coverage analysis, Prove-It bug tests, and missing test scenarios."
+config_file = "agents/test-engineer.config.toml"
+nickname_candidates = ["QA", "Test Engineer", "Coverage"]
